@@ -25,7 +25,7 @@ import viewIcon from "../../assets/edit.png";
 import forward from "../../assets/forward.png";
 import backward from "../../assets/back.png";
 import { useTheme } from "@mui/material/styles";
-import style from "../BooksData/style.module.css"
+import style from "../BooksData/style.module.css";
 
 const ExcelReader = () => {
   const [data, setData] = useState([]);
@@ -93,21 +93,18 @@ const ExcelReader = () => {
   };
 
   const handleFilter = () => {
-    console.log("handleFilter");
     setFilter(true);
   };
 
   const authors = [
     ...new Set(
       data.map((item) => {
-        console.log("item");
         return item.Author;
       })
     ),
   ];
   const years = [...new Set(data.map((item) => item.PublishedYear))];
 
-  console.log("authors000", authors);
   const [filteredAuthor, setFilteredAuthor] = useState([]);
 
   const handleChange = (event) => {
@@ -117,16 +114,11 @@ const ExcelReader = () => {
     setFilteredAuthor(typeof value === "string" ? value.split(",") : value);
   };
 
-  console.log("filteredAuthor", filteredAuthor);
-
   const handleCloseFilter = () => {
     setFilter(false);
   };
 
   const handleApply = () => {
-    console.log("data11", data);
-    console.log("selected items", filteredAuthor);
-
     const filteredData = data.filter((item) =>
       filteredAuthor.includes(item.Author)
     );
@@ -134,7 +126,6 @@ const ExcelReader = () => {
   };
 
   const handleReferesh = () => {
-    console.log("refresh");
     setFilteredAuthor([]);
     setData([...originalData]);
   };
@@ -155,10 +146,9 @@ const ExcelReader = () => {
         sx={{
           display: "flex",
           gap: "15px",
-          justifyContent: data.length === 0  || isMobile ? "center" : "flex-end",
+          justifyContent: data.length === 0 || isMobile ? "center" : "flex-end",
           flexDirection: "row",
         }}
-       
       >
         <label htmlFor="upload-excel">
           <input
@@ -173,11 +163,11 @@ const ExcelReader = () => {
             component="span"
             size="small"
             sx={{
-              minWidth: isMobile? "60px":"120px", 
-              height:isMobile? "32px": "40px", 
-              fontSize: isMobile?"10px": "18px", 
-              padding: "4px 8px", 
-              textTransform: "none", 
+              minWidth: isMobile ? "60px" : "120px",
+              height: isMobile ? "32px" : "40px",
+              fontSize: isMobile ? "10px" : "18px",
+              padding: "4px 8px",
+              textTransform: "none",
             }}
           >
             Upload File
@@ -185,25 +175,33 @@ const ExcelReader = () => {
         </label>
         <Box display="flex" gap={2} justifyContent="flex-end">
           {data.length > 0 && (
-            <Button variant="contained" onClick={handleDownload} sx={{
-            minWidth: isMobile? "60px":"120px", 
-              height:isMobile? "32px": "40px", 
-              fontSize: isMobile?"10px": "18px", 
-              padding: "4px 8px", 
-              textTransform: "none", 
-            }}>
+            <Button
+              variant="contained"
+              onClick={handleDownload}
+              sx={{
+                minWidth: isMobile ? "60px" : "120px",
+                height: isMobile ? "32px" : "40px",
+                fontSize: isMobile ? "10px" : "18px",
+                padding: "4px 8px",
+                textTransform: "none",
+              }}
+            >
               Download
             </Button>
           )}
 
           {data.length > 0 && (
-            <Button variant="contained" onClick={() => handleFilter()} sx={{
-             minWidth: isMobile? "60px":"120px", 
-              height:isMobile? "32px": "40px", 
-              fontSize: isMobile?"10px": "18px", 
-              padding: "4px 8px", 
-              textTransform: "none", 
-            }}>
+            <Button
+              variant="contained"
+              onClick={() => handleFilter()}
+              sx={{
+                minWidth: isMobile ? "60px" : "120px",
+                height: isMobile ? "32px" : "40px",
+                fontSize: isMobile ? "10px" : "18px",
+                padding: "4px 8px",
+                textTransform: "none",
+              }}
+            >
               Filter
             </Button>
           )}
@@ -233,7 +231,6 @@ const ExcelReader = () => {
                 <Box flex={1} padding={2}>
                   {selectedFilter === "author" && (
                     <Box>
-                    
                       <FormControl sx={{ m: 1, width: 300 }}>
                         <InputLabel id="demo-multiple-name-label">
                           Authors
@@ -256,7 +253,7 @@ const ExcelReader = () => {
                       </FormControl>
                     </Box>
                   )}
-                
+
                   <Box
                     sx={{ display: "flex", gap: "10px", flexDirection: "row" }}
                   >
@@ -286,7 +283,7 @@ const ExcelReader = () => {
           }}
         >{`Total Count : ${data.length}`}</Typography>
       )}
-      <div style={{ width: "100%", overflowX: "auto" }}>
+      <div style={{ width: "100%", overflowX: "auto", scrollbarWidth: "10px" }}>
         {data.length > 0 && (
           <table
             style={{
@@ -297,113 +294,213 @@ const ExcelReader = () => {
           >
             <thead>
               <tr>
-                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px",  whiteSpace: "nowrap",}}>
+                <th
+                  style={{
+                    border: "1px solid black",
+                    padding: isMobile ? "6px" : "10px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   S.No
                 </th>
-                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
+                <th
+                  style={{
+                    border: "1px solid black",
+                    padding: isMobile ? "6px" : "10px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   Title
                 </th>
-                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
+                <th
+                  style={{
+                    border: "1px solid black",
+                    padding: isMobile ? "6px" : "10px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   Author
                 </th>
-                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
+                <th
+                  style={{
+                    border: "1px solid black",
+                    padding: isMobile ? "6px" : "10px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   Genre
                 </th>
-                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
+                <th
+                  style={{
+                    border: "1px solid black",
+                    padding: isMobile ? "6px" : "10px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   Year
                 </th>
-                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
+                <th
+                  style={{
+                    border: "1px solid black",
+                    padding: isMobile ? "6px" : "10px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   ISBN
                 </th>
               </tr>
             </thead>
             <tbody>
-              {currentRows.map((item, index) => (
-                <tr key={index}>
-                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
-                    {(currentPage - 1) * rowsPerPage + index + 1}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
-                    {editIndex === index ? (
-                      <TextField
-                        value={item.Title}
-                        onChange={(e) => handleCellChange(e, index, "Title")}
-                        size="small"
-                      />
-                    ) : (
-                      item.Title
-                    )}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
-                    {editIndex === index ? (
-                      <TextField
-                        value={item.Author}
-                        onChange={(e) => handleCellChange(e, index, "Author")}
-                        size="small"
-                      />
-                    ) : (
-                      item.Author
-                    )}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
-                    {editIndex === index ? (
-                      <TextField
-                        value={item.Genre}
-                        onChange={(e) => handleCellChange(e, index, "Genre")}
-                        size="small"
-                      />
-                    ) : (
-                      item.Genre
-                    )}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
-                    {editIndex === index ? (
-                      <TextField
-                        value={item.PublishedYear}
-                        onChange={(e) =>
-                          handleCellChange(e, index, "PublishedYear")
-                        }
-                        size="small"
-                      />
-                    ) : (
-                      item.PublishedYear
-                    )}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
-                    {editIndex === index ? (
-                      <TextField
-                        value={item.ISBN}
-                        onChange={(e) => handleCellChange(e, index, "ISBN")}
-                        size="small"
-                      />
-                    ) : (
-                      item.ISBN
-                    )}
-                  </td>
-                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
-                    {editIndex === index ? (
-                      <Button onClick={() => setEditIndex(null)}>Save</Button>
-                    ) : (
-                      <Button
-                        onClick={() => setEditIndex(index)}
-                        style={{ display: "flex", gap: "10px" }}
-                      >
-                        <Typography style={{fontSize: isMobile ? '12px' : '16px' }}>Edit</Typography>
-                        <img
-                          src={viewIcon}
-                          alt="edit"
-                          style={{ width: 20, height: 20 }}
+              {currentRows.map((item, index) => {
+                const globalIndex = (currentPage - 1) * rowsPerPage + index; 
+
+                return (
+                  <tr key={globalIndex}>
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        padding: isMobile ? "6px" : "10px",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {globalIndex + 1} 
+                    </td>
+
+                    {/* Title */}
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        padding: isMobile ? "6px" : "10px",
+                      }}
+                    >
+                      {editIndex === globalIndex ? (
+                        <TextField
+                          value={item.Title}
+                          onChange={(e) =>
+                            handleCellChange(e, globalIndex, "Title")
+                          }
+                          size="small"
                         />
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-              ))}
+                      ) : (
+                        item.Title
+                      )}
+                    </td>
+
+                    {/* Author */}
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        padding: isMobile ? "6px" : "10px",
+                      }}
+                    >
+                      {editIndex === globalIndex ? (
+                        <TextField
+                          value={item.Author}
+                          onChange={(e) =>
+                            handleCellChange(e, globalIndex, "Author")
+                          }
+                          size="small"
+                        />
+                      ) : (
+                        item.Author
+                      )}
+                    </td>
+
+                    {/* Genre */}
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        padding: isMobile ? "6px" : "10px",
+                      }}
+                    >
+                      {editIndex === globalIndex ? (
+                        <TextField
+                          value={item.Genre}
+                          onChange={(e) =>
+                            handleCellChange(e, globalIndex, "Genre")
+                          }
+                          size="small"
+                        />
+                      ) : (
+                        item.Genre
+                      )}
+                    </td>
+
+                    {/* Year */}
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        padding: isMobile ? "6px" : "10px",
+                      }}
+                    >
+                      {editIndex === globalIndex ? (
+                        <TextField
+                          value={item.PublishedYear}
+                          onChange={(e) =>
+                            handleCellChange(e, globalIndex, "PublishedYear")
+                          }
+                          size="small"
+                        />
+                      ) : (
+                        item.PublishedYear
+                      )}
+                    </td>
+
+                    {/* ISBN */}
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        padding: isMobile ? "6px" : "10px",
+                      }}
+                    >
+                      {editIndex === globalIndex ? (
+                        <TextField
+                          value={item.ISBN}
+                          onChange={(e) =>
+                            handleCellChange(e, globalIndex, "ISBN")
+                          }
+                          size="small"
+                        />
+                      ) : (
+                        item.ISBN
+                      )}
+                    </td>
+
+                    {/* Edit / Save button */}
+                    <td
+                      style={{
+                        border: "1px solid black",
+                        padding: isMobile ? "6px" : "10px",
+                      }}
+                    >
+                      {editIndex === globalIndex ? (
+                        <Button onClick={() => setEditIndex(null)}>Save</Button>
+                      ) : (
+                        <Button
+                          onClick={() => setEditIndex(globalIndex)}
+                          style={{ display: "flex", gap: "10px" }}
+                        >
+                          <Typography
+                            style={{ fontSize: isMobile ? "12px" : "16px" }}
+                          >
+                            Edit
+                          </Typography>
+                          <img
+                            src={viewIcon}
+                            alt="edit"
+                            style={{ width: 20, height: 20 }}
+                          />
+                        </Button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}
       </div>
-
+      {/*Pagination*/}
       {data.length > 0 && (
         <div
           style={{
