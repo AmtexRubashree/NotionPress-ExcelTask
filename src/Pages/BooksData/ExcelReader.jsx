@@ -18,15 +18,16 @@ import {
   InputLabel,
   Select,
   OutlinedInput,
+  useMediaQuery,
 } from "@mui/material";
 import * as XLSX from "xlsx";
-import viewIcon from "../assets/edit.png";
-import forward from "../assets/forward.png";
-import backward from "../assets/back.png";
-import { useNavigate } from "react-router-dom";
+import viewIcon from "../../assets/edit.png";
+import forward from "../../assets/forward.png";
+import backward from "../../assets/back.png";
+import { useTheme } from "@mui/material/styles";
+import style from "../BooksData/style.module.css"
 
 const ExcelReader = () => {
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
@@ -34,6 +35,8 @@ const ExcelReader = () => {
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   // Calculate the data to display on the current page
   const indexOfLastRow = currentPage * rowsPerPage;
@@ -146,14 +149,16 @@ const ExcelReader = () => {
         padding: "0 0",
       }}
     >
-      <h1>Books Data</h1>
+      <Typography>Books Data</Typography>
 
       <Box
         sx={{
           display: "flex",
           gap: "15px",
-          justifyContent: data.length === 0 ? "center" : "flex-end",
+          justifyContent: data.length === 0  || isMobile ? "center" : "flex-end",
+          flexDirection: "row",
         }}
+       
       >
         <label htmlFor="upload-excel">
           <input
@@ -163,19 +168,42 @@ const ExcelReader = () => {
             style={{ display: "none" }}
             onChange={handleFileUpload}
           />
-          <Button variant="contained" component="span">
+          <Button
+            variant="contained"
+            component="span"
+            size="small"
+            sx={{
+              minWidth: isMobile? "60px":"120px", 
+              height:isMobile? "32px": "40px", 
+              fontSize: isMobile?"10px": "18px", 
+              padding: "4px 8px", 
+              textTransform: "none", 
+            }}
+          >
             Upload File
           </Button>
         </label>
         <Box display="flex" gap={2} justifyContent="flex-end">
           {data.length > 0 && (
-            <Button variant="contained" onClick={handleDownload}>
+            <Button variant="contained" onClick={handleDownload} sx={{
+            minWidth: isMobile? "60px":"120px", 
+              height:isMobile? "32px": "40px", 
+              fontSize: isMobile?"10px": "18px", 
+              padding: "4px 8px", 
+              textTransform: "none", 
+            }}>
               Download
             </Button>
           )}
 
           {data.length > 0 && (
-            <Button variant="contained" onClick={() => handleFilter()}>
+            <Button variant="contained" onClick={() => handleFilter()} sx={{
+             minWidth: isMobile? "60px":"120px", 
+              height:isMobile? "32px": "40px", 
+              fontSize: isMobile?"10px": "18px", 
+              padding: "4px 8px", 
+              textTransform: "none", 
+            }}>
               Filter
             </Button>
           )}
@@ -202,14 +230,10 @@ const ExcelReader = () => {
                   </ListItem>
                 </List>
 
-                {/* Right Side: Filter content based on selection */}
                 <Box flex={1} padding={2}>
                   {selectedFilter === "author" && (
                     <Box>
-                      {/* <Typography variant="subtitle1">Authors:</Typography>
-                    {authors.map((author) => (
-                      <Typography key={author}>• {author}</Typography>
-                    ))} */}
+                    
                       <FormControl sx={{ m: 1, width: 300 }}>
                         <InputLabel id="demo-multiple-name-label">
                           Authors
@@ -232,21 +256,7 @@ const ExcelReader = () => {
                       </FormControl>
                     </Box>
                   )}
-                  {selectedFilter === "year" && (
-                    // <Box>
-                    //   <Typography variant="subtitle1">Published Years:</Typography>
-                    //   {years.map((year) => (
-                    //     <Typography key={year}>• {year}</Typography>
-                    //   ))}
-                    // </Box>
-                    <Box>
-                      <TextField
-                        label="Enter the year"
-                        variant="outlined"
-                        size="small"
-                      ></TextField>
-                    </Box>
-                  )}
+                
                   <Box
                     sx={{ display: "flex", gap: "10px", flexDirection: "row" }}
                   >
@@ -266,41 +276,43 @@ const ExcelReader = () => {
           </Dialog>
         </Box>
       </Box>
-      <Typography
-        style={{
-          display: "flex",
-          gap: "15px",
-          justifyContent: "flex-start",
-          fontSize: '24px'
-          
-        }}
-      >{`Total Count : ${data.length}`}</Typography>
+      {data.length > 0 && (
+        <Typography
+          style={{
+            display: "flex",
+            gap: "15px",
+            justifyContent: "flex-start",
+            fontSize: "24px",
+          }}
+        >{`Total Count : ${data.length}`}</Typography>
+      )}
       <div style={{ width: "100%", overflowX: "auto" }}>
         {data.length > 0 && (
           <table
             style={{
               width: "100%",
               borderCollapse: "collapse",
+              fontSize: isMobile ? "12px" : "14px",
             }}
           >
             <thead>
               <tr>
-                <th style={{ border: "1px solid black", padding: "8px" }}>
+                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px",  whiteSpace: "nowrap",}}>
                   S.No
                 </th>
-                <th style={{ border: "1px solid black", padding: "8px" }}>
+                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                   Title
                 </th>
-                <th style={{ border: "1px solid black", padding: "8px" }}>
+                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                   Author
                 </th>
-                <th style={{ border: "1px solid black", padding: "8px" }}>
+                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                   Genre
                 </th>
-                <th style={{ border: "1px solid black", padding: "8px" }}>
+                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                   Year
                 </th>
-                <th style={{ border: "1px solid black", padding: "8px" }}>
+                <th style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                   ISBN
                 </th>
               </tr>
@@ -308,10 +320,10 @@ const ExcelReader = () => {
             <tbody>
               {currentRows.map((item, index) => (
                 <tr key={index}>
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
-                    {index + 1}
+                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
+                    {(currentPage - 1) * rowsPerPage + index + 1}
                   </td>
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
+                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                     {editIndex === index ? (
                       <TextField
                         value={item.Title}
@@ -322,7 +334,7 @@ const ExcelReader = () => {
                       item.Title
                     )}
                   </td>
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
+                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                     {editIndex === index ? (
                       <TextField
                         value={item.Author}
@@ -333,7 +345,7 @@ const ExcelReader = () => {
                       item.Author
                     )}
                   </td>
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
+                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                     {editIndex === index ? (
                       <TextField
                         value={item.Genre}
@@ -344,7 +356,7 @@ const ExcelReader = () => {
                       item.Genre
                     )}
                   </td>
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
+                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                     {editIndex === index ? (
                       <TextField
                         value={item.PublishedYear}
@@ -357,7 +369,7 @@ const ExcelReader = () => {
                       item.PublishedYear
                     )}
                   </td>
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
+                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                     {editIndex === index ? (
                       <TextField
                         value={item.ISBN}
@@ -368,7 +380,7 @@ const ExcelReader = () => {
                       item.ISBN
                     )}
                   </td>
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
+                  <td style={{ border: "1px solid black", padding: isMobile ? "6px" : "10px", whiteSpace: "nowrap", }}>
                     {editIndex === index ? (
                       <Button onClick={() => setEditIndex(null)}>Save</Button>
                     ) : (
@@ -376,7 +388,7 @@ const ExcelReader = () => {
                         onClick={() => setEditIndex(index)}
                         style={{ display: "flex", gap: "10px" }}
                       >
-                        <Typography style={{}}>Edit</Typography>
+                        <Typography style={{fontSize: isMobile ? '12px' : '16px' }}>Edit</Typography>
                         <img
                           src={viewIcon}
                           alt="edit"
@@ -394,7 +406,13 @@ const ExcelReader = () => {
 
       {data.length > 0 && (
         <div
-          style={{ marginTop: "10px", display: "flex", flexDirection: "row" , alignItems: 'center', justifyContent: 'flex-end'}}
+          style={{
+            marginTop: "10px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
         >
           <Button
             disabled={currentPage === 1}
@@ -402,14 +420,14 @@ const ExcelReader = () => {
           >
             <img src={backward}></img>
           </Button>
-          <Typography style={{  textAlign: 'center' }}>
+          <Typography style={{ textAlign: "center" }}>
             Page {currentPage} of {totalPages}
           </Typography>
           <Button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((prev) => prev + 1)}
           >
-           <img src={forward}></img>
+            <img src={forward}></img>
           </Button>
         </div>
       )}
