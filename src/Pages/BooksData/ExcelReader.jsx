@@ -32,7 +32,7 @@ const ExcelReader = () => {
   const [originalData, setOriginalData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [openFilter, setFilter] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState("author");
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
   const theme = useTheme();
@@ -103,6 +103,15 @@ const ExcelReader = () => {
       })
     ),
   ];
+
+
+  const genre = [
+      ...new Set(
+      data.map((item) => {
+        return item.Genre;
+      })
+    ),
+  ]
   const years = [...new Set(data.map((item) => item.PublishedYear))];
 
   const [filteredAuthor, setFilteredAuthor] = useState([]);
@@ -140,7 +149,9 @@ const ExcelReader = () => {
         padding: "0 0",
       }}
     >
-      <Typography>Books Data</Typography>
+      <Typography style={{ fontSize: isMobile ? "21px" : "42px" }}>
+        Books Data
+      </Typography>
 
       <Box
         sx={{
@@ -221,11 +232,7 @@ const ExcelReader = () => {
                       <ListItemText primary="By Author" />
                     </ListItemButton>
                   </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton onClick={() => setSelectedFilter("year")}>
-                      <ListItemText primary="By Published Year" />
-                    </ListItemButton>
-                  </ListItem>
+                 
                 </List>
 
                 <Box flex={1} padding={2}>
@@ -352,7 +359,7 @@ const ExcelReader = () => {
             </thead>
             <tbody>
               {currentRows.map((item, index) => {
-                const globalIndex = (currentPage - 1) * rowsPerPage + index; 
+                const globalIndex = (currentPage - 1) * rowsPerPage + index;
 
                 return (
                   <tr key={globalIndex}>
@@ -363,7 +370,7 @@ const ExcelReader = () => {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      {globalIndex + 1} 
+                      {globalIndex + 1}
                     </td>
 
                     {/* Title */}
